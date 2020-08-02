@@ -11,11 +11,32 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
     stages {
+        stage("Docker login"){
+            steps {
+                echo "================Docker login====================="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_streetstorm', 
+                                                  usernameVariable: 'USERNAME',
+                                                  passwordVariable: 'PASSWORD')])
+                    sh """
+                    docker login -u $USERNAME -p $PASSWORD
+                    """
+                }
+            }
+        }
         stage("Create docker image"){
             steps {
                 echo "================start build image====================="
                 dir ('docker/toolbox') {
                     sh 'docker build -t streetstorm/toolbox:latest . '
+                }                
+            }
+        }
+        stage("Docker push"){
+            steps {
+                echo "================start pushing image====================="
+                sh """
+                docker push streetstorm/toolbox:latest
+                """
                 }                
             }
         }
