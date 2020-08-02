@@ -1,3 +1,3 @@
 FROM ubuntu
-RUN apt-get install awscli
+RUN apt-get update && apt-get install awscli
 
