@@ -36,8 +36,7 @@ pipeline {
                 echo "================start pushing image====================="
                 sh """
                 docker push streetstorm/toolbox:latest
-                """
-                }                
+                """            
             }
         }
     }
