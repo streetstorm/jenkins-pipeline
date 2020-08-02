@@ -1,3 +1,3 @@
-FROM ubuntu
-RUN apt-get update && apt-get install awscli -y
+FROM python:3.8-slim
+RUN pip install awscli
 
